@@ -4,7 +4,7 @@ const gmaeStart = {
   key: 'gameStart',
   preload: function () {
     // this.load.image('bg1', './images/ay758-dykqn.png')
-    this.load.spritesheet('character1', './src/images/bandit_0b.png', { frameWidth: 80, frameHeight: 80 })
+    this.load.spritesheet('character1', './src/images/bandit_0b.png', { frameWidth: 79, frameHeight: 79, spacing: 1, })
     // this.load.spritesheet('user', './images/bandit_1b.png', { frameWidth: 80, frameHeight: 80 })
   },
   create: function () {
@@ -35,61 +35,64 @@ const gmaeStart = {
 
 
     // PLAYER
-    // player = this.add.container(200, 400)
-    // playerSprites = this.add.sprite(200, 400, 'character1')
+    character = this.add.sprite(0, 0, 'character1')
     
-    
-    
-    player = this.physics.add.sprite(200, 400, 'character1')
-    player.setCollideWorldBounds(true)
-
-    // label name
-    playerLabel = this.add.text(200, 400, 'Bandit', { font: '12px Arial' })
+    playerLabel = this.add.text(0, 0, 'Bandit', { font: '12px Arial' })
     playerLabel.stroke = "#de77ae"
     playerLabel.setOrigin(0.5, -3.0)
-    this.physics.arcade.enable([ playerLabel ])
-    playerLabel.body.velocity.setTo(200, 200)
 
-    // player.add([playerSprites, playerLabel])
+    player = this.add.container(200, 400, [character, playerLabel])
 
-    // console.log('player', player)
+    this.physics.world.enable(player)
+
+    player.body.setVelocity(0, 0).setCollideWorldBounds(true)
+    // setVelocityFromRotation
+
+
 
 
     // animation set
     stand = this.anims.create({
       key: 'stand',
       frames: this.anims.generateFrameNumbers('character1', { start: 0, end: 3 }),
-      frameRate: 4,
+      frameRate: 32 * 0.3 * 0.4,
       repeat: -1,
       yoyo: true,
     })
 
-    // walk = this.anims.create({
-    //   key: 'walk',
-    //   frames: this.anims.generateFrameNumbers('user', { start: 4, end: 7 }),
-    //   frameRate: 4,
-    //   repeat: -1,
-    //   yoyo: true,
-    // })
+    walk = this.anims.create({
+      key: 'walk',
+      frames: this.anims.generateFrameNumbers('character1', { start: 4, end: 7 }),
+      frameRate: 32 * 0.3 * 0.4,
+      repeat: -1,
+      yoyo: true,
+    })
 
-    // run = this.anims.create({
-    //   key: 'run',
-    //   frames: this.anims.generateFrameNumbers('user', { start: 20, end: 22 }),
-    //   frameRate: 8,
-    //   repeat: -1,
-    //   yoyo: true,
-    // })
+    run = this.anims.create({
+      key: 'run',
+      frames: this.anims.generateFrameNumbers('character1', { start: 20, end: 22 }),
+      frameRate: 32 * 0.3 * 0.4,
+      repeat: -1,
+      yoyo: true,
+    })
 
-    // attack = this.anims.create({
-    //   key: 'attack',
-    //   frames: this.anims.generateFrameNumbers('user', { start: 10, end: 13 }),
-    //   frameRate: 4,
-    //   repeat: -1,
-    // })
+    attack = this.anims.create({
+      key: 'attack',
+      frames: this.anims.generateFrameNumbers('character1', { start: 10, end: 13 }),
+      frameRate: 32 * 0.3 * 0.4,
+      repeat: -1,
+    })
+
+    jump = this.anims.create({
+      key: 'jump',
+      frames: this.anims.generateFrameNumbers('character1', { start: 60, end: 62 }),
+      frameRate: 32 * 0.3 * 0.4,
+    })
+
+    player.list[0].play(stand, true)
+
 
     // player.add(playerName)
-    player.anims.play(stand, true)
-
     // this.tweens.add({
     //   targets: container,
     //   angle: 360,
@@ -101,8 +104,26 @@ const gmaeStart = {
 
   update: function () {
     if (this.key.right.isDown) {
-      player.setVelocityX(140)
+      player.body.setVelocityX(140)
+      player.list[0].flipX = false
+      player.list[0].play(walk, true)
+    } else if (this.key.left.isDown) {
+      player.body.setVelocityX(-140)
+      player.list[0].flipX = true
+      player.list[0].play(walk, true)
+    } else if (this.key.jump.isDown) {
+      player.body.setVelocityY(-140)
+      player.list[0].play(jump, true)
+      setTimeout(() => {
+        player.body.setVelocityY(140)
+      }, 100)
+    } else if (this.key.attack.isDown) {
+      player.list[0].play(attack, true)
+    } else {
+      player.body.setVelocityX(0)
+      player.list[0].play(stand, true)
     }
+
 
     // player.setVelocity(0)
     // console.log(player.body.blocked.down)
@@ -204,7 +225,6 @@ const config = {
     //   debug: false
     // }
   },
-  // backgroundColor: '#2d2d2d',
   scene: [
     gmaeStart
   ]
