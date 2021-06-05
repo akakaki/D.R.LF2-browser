@@ -17,6 +17,6 @@ https://rexrainbow.github.io/phaser3-rex-notes/docs/site/sprite/
 https://phaser.io/phaser3/devlog/120
 https://hackmd.io/@sam585456525/SkAHmmXDL
 https://github.com/tyt2y3/LFreleasehttps://phaser.discourse.group/t/how-to-create-key-combo-with-custom-buttons/2622/7
-https://github.com/tyt2y3/LFrelease/blob/master/LF2_19/data/bandit.js
+https://github.com/Project-F/F.LF
 https://github.com/photonstorm/phaser3-examples/blob/master/public/src/animation/aseprite%20animation.js
 https://stonetingxin.gitbooks.io/phaser/content/fist___games/sprites.html

@@ -30,15 +30,16 @@ export default (vm) => {
 
   // PLAYER
   vm.character = vm.add.sprite(0, 0, 'character1')
-  vm.playerLabel = vm.add.text(.5, -3, vm.characterData.label, {font: '12px Arial', stroke: '#2b2a2a', strokeThickness: 2, padding: { x: 2, y: 2, }})
-  vm.playerLabel.setOrigin(.5, -3)
 
-  vm.player = vm.add.container(200, 400, [vm.character, vm.playerLabel])
+  vm.shadow = vm.add.image(0, 27, 'shadow')
+  vm.shadow.setOrigin(.5, -.5)
 
+  vm.playerLabel = vm.add.text(.5, 40, vm.characterData.label, {font: '12px Arial', stroke: '#2b2a2a', strokeThickness: 2, padding: { x: 2, y: 2, }})
+  vm.playerLabel.setOrigin(.5, 0)
+
+  vm.player = vm.add.container(200, 400, [vm.shadow, vm.playerLabel, vm.character, ])
   vm.physics.world.enable(vm.player)
-
   vm.player.body.setVelocity(0, 0).setCollideWorldBounds(true)
-
 
   return vm
 }

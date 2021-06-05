@@ -1,20 +1,31 @@
 export default function () {
+  http://labs.phaser.io/edit.html?src=src/input/keyboard/just%20down.js
+  const keyboardDown = [
+    this.key.up.isDown,
+    this.key.down.isDown,
+    this.key.right.isDown,
+    this.key.left.isDown,
+  ]
+  if (keyboardDown.includes(true)) return false
+
   if (this.key.up.isDown) {
     this.player.body.setVelocityY(-1 * this.characterData.walkDistance)
-    this.player.list[0].play(this.walk, true)
+    this.player.scene.character.play(this.walk, true)
   } else if (this.key.right.isDown) {
     this.player.body.setVelocityX(this.characterData.walkDistance)
-    this.player.list[0].flipX = false
-    this.player.list[0].play(this.walk, true)
+    this.player.scene.character.flipX = false
+    this.player.scene.character.play(this.walk, true)
   } else if (this.key.down.isDown) {
     this.player.body.setVelocityY(this.characterData.walkDistance)
-    this.player.list[0].play(this.walk, true)
+    this.player.scene.character.play(this.walk, true)
   } else if (this.key.left.isDown) {
     this.player.body.setVelocityX(-1 * this.characterData.walkDistance)
-    this.player.list[0].flipX = true
-    this.player.list[0].play(this.walk, true)
-  } else if (this.key.jump.isDown) {
-    this.player.list[0].play(this.jump, true)
+    this.player.scene.character.flipX = true
+    this.player.scene.character.play(this.walk, true)
+  } else if (Phaser.Input.Keyboard.JustDown(this.key.jump)) {
+    
+    this.player.scene.character.play(this.jump, true)
+    // https://www.html5gamedevs.com/topic/39389-key-press-event-non-repeat-keydown-event/
     // jumpStatus.position = player.body.position.y - jumpStatus.height
     
     // const qq = setInterval(() => {
@@ -31,15 +42,15 @@ export default function () {
     // }, 100)
   } else if (this.key.attack.isDown) {
     this.characterData.status = 'atk'
-    this.player.list[0].play(attack, true)
-  } else if (this.key.attack.isUp && this.characterData.status === 'atk' && this.player.list[0].anims.currentFrame.nextFrame.isLast) {
+    this.player.scene.character.play(this.attack, true)
+  } else if (this.key.attack.isUp && this.characterData.status === 'atk' && this.player.scene.character.anims.currentFrame.nextFrame.isLast) {
     this.characterData.status = ''
   } else if (this.key.defense.isDown) {
-    this.player.list[0].play(def, true)
+    this.player.scene.character.play(this.def, true)
   } else if (!this.action.includes(this.characterData.status)) {
     this.characterData.status = ''
     this.player.body.setVelocity(0)
-    this.player.list[0].play(this.stand, true)
+    this.player.scene.character.play(this.stand, true)
   }
 
 

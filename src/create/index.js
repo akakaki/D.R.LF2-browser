@@ -53,7 +53,22 @@ export default function () {
     frameRate: 32 * 0.3 * 0.4,
   })
 
-  this.player.list[0].play(this.stand, true)
+  this.player.scene.character.play(this.stand, true)
+
+  this.runrun = this.input.keyboard.createCombo([this.key.right, this.key.right], { resetOnMatch: true })
+  const _this = this.player
+  this.input.keyboard.on('keycombomatch', function (event) {
+    console.log('_this.input.keyboard', _this.scene.input.keyboard)
+    _this.body.setVelocityX(150)
+    _this.scene.character.flipX = false
+    _this.scene.character.play(_this.scene.run, true)
+  });
+
+  // this.walkwalk = this.input.keyboard.addKey('W')
+  this.key.right.on('down', function(event) {
+    console.log('qq', event)
+  })
+
 
   // player.add(playerName)
   // this.tweens.add({

@@ -7,16 +7,22 @@ const config = {
   height: 500,
   physics: {
     default: 'arcade',
-    // arcade: {
+    arcade: {
     //   gravity: { y: 300 },
-    //   debug: false
-    // }
+      debug: false
+    }
   },
   resolution: PIXEL_RATIO,
   // canvasStyle: 'width:100%;height:100%',
   scene: [
     gmaeTest,
-  ]
+  ],
+
+  // false smoothed
+  // antialias: false,
+  render: {
+    pixelArt: true,
+  },
 }
 
 new Phaser.Game(config)

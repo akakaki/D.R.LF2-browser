@@ -3,7 +3,7 @@ import create from './create'
 import update from './update'
 
 export default {
-  key: 'xxx',
+  key: 'test',
   preload,
   create,
   update,
